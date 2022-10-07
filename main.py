@@ -64,18 +64,21 @@ def calculate_overlap(events, number_of_persons):
             availability_event = AvailabilityEvent(result[0].get_start(), result[0].get_end(), available_persons)
         result_list.append(availability_event)
         person_list = events[result[1]]
-        if person_list:
-            person_list.pop(0)
-        # add new event to list of events
-
-        if not person_list:
-            # Empty list
-            current_events[result[1]] = None
+        if result[0].get_end() == limit:
+            break
         else:
-            current_events[result[1]] = person_list[0]
-        for event_to_change in current_events:
-            if event_to_change is not None:
-                event_to_change.start = result[0].get_end()
+            if person_list:
+                person_list.pop(0)
+            # add new event to list of events
+
+            if not person_list:
+                # Empty list
+                current_events[result[1]] = None
+            else:
+                current_events[result[1]] = person_list[0]
+            for event_to_change in current_events:
+                if event_to_change is not None:
+                    event_to_change.start = result[0].get_end()
     return result_list
 
 def get_events(number_of_persons):

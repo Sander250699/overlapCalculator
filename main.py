@@ -1,7 +1,7 @@
 from EventWrapper import *
 from PersonsWrapper import *
 from datetime import datetime
-import random
+from random import *
 import argparse
 import csv
 
@@ -15,8 +15,8 @@ def generate_name():
 
     for _ in range(5):
         # Considering only upper and lowercase letters
-        random_integer = random.randint(97, 97 + 26 - 1)
-        flip_bit = random.randint(0, 1)
+        random_integer = randint(97, 97 + 26 - 1)
+        flip_bit = randint(0, 1)
         # Convert to lowercase if the flip bit is on
         random_integer = random_integer - 32 if flip_bit == 1 else random_integer
         # Keep appending random characters using chr(x)
@@ -40,14 +40,14 @@ def create_events(number_of_persons):
     while all_created.count(True) != len(all_created):
         for x in range(number_of_persons):
             if end_times[x] < limit:
-                end_time = random.randint(start_times[x], limit)
+                end_time = uniform(start_times[x], limit)
                 if end_time == start_times[x]:
                     end_time = end_time + 1
                 if end_time + add_value > limit:
                     end_time = limit
                     all_created[x] = True
                 end_times[x] = end_time
-                event = Event(start_times[x], end_time, bool(random.getrandbits(1)), persons[x])
+                event = Event(start_times[x], end_time, bool(getrandbits(1)), persons[x])
                 start_times[x] = end_time + 1
                 event_list[x].append(event)
     return event_list
